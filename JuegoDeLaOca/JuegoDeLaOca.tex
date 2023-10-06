@@ -1,0 +1,59 @@
+\documentclass[10 pt,a4paper ]{article}
+\input{AEDmacros.tex}
+
+\begin{document}
+\begin{flushleft}
+TAD Tablero:
+\end{flushleft} 
+ obs baldosa : dict$<$pos,mov$>$ \\
+ obs final : int; \\
+
+\begin{flushleft}
+TAD Oca:
+
+\end{flushleft}
+obs pos1 int;\\
+obs pos2 int;\\
+obs turno int; \\
+obs tablero : Tablero \\
+obs dadosHistorial : dict(\ent , seq$<$\ent $>$) \\
+obs quienGano : int\\
+obs casillaHistorial . dict(\ent,sez$<$\ent $>$)\\ 
+\begin{proc}{Inicializar}{\In t: Tablero}{Oca}
+\requiere{\True}
+\asegura{res.pos1 = 0 \land res.pos2 = 0 \land res.turno = 1} 
+\asegura{res.dadosHistorial[1] = [] \land res.dadosHistorial[2] = [] \land res.tablero = t  }
+\asegura{res.casillaHistorial[1] = [] \land res.casillaHistorial[2] = []}
+
+\end{proc}
+
+
+\begin{proc}{Avanzar}{\In dado : \ent , \Inout oca : Oca}{}
+\requiere{o_0 = o \land quienGano \neq 1 \land quienGano \neq 2}
+\asegura{oca.tablero = oca_0.tablero}
+\asegura{oca_0.turno = 1 \implicaLuego oca.dadosHistorial = SetKey(oca_0.dadosHistorial,1,concat(oca_0.dadosHistorial[1],[dado]} 
+\asegura{oca_0.turno = 2 \implicaLuego oca.dadosHistorial = SetKey(oca_0.dadosHistorial,2,concat(oca_0.dadosHistorial[2],[dado])}
+\asegura{(oca_0.turno = 1 \yLuego (oca.pos1 = oca_0.pos1 + oca_0.tablero.baldosa(oca_0.pos1 + dado) \land oca.pos2 = oca_0.pos2 \land oca_0.turno = 2 \land (oca.pos1 >= oca.tablero.final \implicaLuego oca.quienGano = 1 ) (\yLuego oca.pos1 < oca.tablero.final \implicaLuego oca.quienGano = oca_0.quienGano) ) \\
+\lor(oca.turno = 2 \yLuego oca.pos2 = oca_0.pos2 + oca_0.tablero.baldosa(oca_0.pos2 + dado) \land oca.pos1 = oca_0.pos1 \land oca.turno = 1 (oca.pos2 >= oca.tablero.final \implicaLuego oca.quienGano = 2 ) \yLuego (oca.pos2 < oca.tablero.final \implicaLuego oca.quienGano = oca_0.quienGano))}
+\asegura{ oca_0.turno = 1 \implicaLuego \\ oca.casillaHistorial = SetKey(oca_0.casillaHistorial,1,concat(oca_0.casillaHistorial[1],[oca.pos1])}
+\asegura{ oca_0.turno = 2 \implicaLuego \\ oca.casillaHistorial = SetKey(oca_0.casillaHistorial,2,concat(oca_0.casillaHistorial[2],[oca.pos2])}
+\end{proc}
+
+\begin{proc}{dadoEnJugada}{\In nro : \ent, \In oca: Oca, \In jugador : \ent}{\ent}
+\requiere{(jugador = 1 \lor jugador = 2) \land (\indValido{nro}{oca.dadosHistorial[1]} \lor \indValido{nro}{oca.dadosHistorial[2] }}
+\asegura{(jugador = 1 \land res = oca.dadosHistorial[1][nro]) \lor (jugador = 2 \land res = oca.dadosHistorial[2][nro]}
+
+\end{proc}
+
+\begin{proc}{CasillaFuePisada}{\In jugador : \ent, \In casilla : \ent ,\In oca : Oca}{\bool}
+\requiere{(jugador = 1 \lor jugador = 2) \land casilla \le oca.tablero.final}
+\asegura{jugador = 1 \implicaLuego ( res = \True  \leftrightarrow casilla \in oca.casillaHistorial[1]}
+\asegura {jugador = 2 \implicaLuego ( res = \True  \leftrightarrow casilla \in oca.casillaHistorial[2]}
+
+\end{proc}
+\begin{proc}{Ganador}{\In o : Oca}{\bool}
+\requiere{oca.quienGano = 1 \lor oca.quienGano = 2}
+\asegura{res = oca.quienGano}
+\end{proc}
+
+\end{document}

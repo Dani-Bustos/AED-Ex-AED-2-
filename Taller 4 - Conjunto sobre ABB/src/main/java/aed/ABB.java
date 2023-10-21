@@ -117,68 +117,72 @@ public class ABB<T extends Comparable<T>> implements Conjunto<T> {
     }
 
     public void eliminar(T elem){
-        Nodo ultima_pos = buscarNodo(elem, _raiz);
+        Nodo A_borrar = buscarNodo(elem, _raiz);
         cantidad--;
-        if(ultima_pos == null || ultima_pos.valor.compareTo(elem ) != 0){
+        if (_raiz == null || A_borrar.valor != elem){
             cantidad++;
             return;
+        }
+        
+        if(A_borrar.izq == null && A_borrar.der == null){ //Sin Hijos
+          
+            if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
+                A_borrar.padre.izq = null;
+            }else{
+                A_borrar.padre.der = null;
+            }
+
+        }else if (A_borrar.der == null){//Solo Hijo Izquierdo
+            if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
+                A_borrar.padre.izq = A_borrar.izq;
+            }else{
+                A_borrar.padre.der = A_borrar.izq;
+            }
+        
+        }else if(A_borrar.izq == null){ //Solo Hijo Derecho
+            if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
+                A_borrar.padre.izq = A_borrar.der;
+            }else{
+                A_borrar.padre.der = A_borrar.der;
+            }
+        }else{ //dosHijos
+          Nodo suc = sucesor(A_borrar.der);
+
+          if(suc.der != null){
+            suc.der.padre = suc.padre;
+            suc.padre.izq = suc.der;
+          }
+        
+           suc.padre = A_borrar.padre;
+           suc.izq = A_borrar.izq;
+           
+           if(A_borrar.der == suc){
+            suc.der = A_borrar.der.der;
+           }else{
+            suc.der = A_borrar.der;
+           }
+
+           if (suc.padre != null){
+            if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
+                A_borrar.padre.izq = suc;
+            }else{
+                A_borrar.padre.der = suc;
+            }
+          }
+
+        }
             
-        }else if (ultima_pos.der == null && ultima_pos.izq == null){
-            if(ultima_pos.padre.der == ultima_pos){
-                ultima_pos.padre.der = null;
-            }else if (ultima_pos.padre.izq == ultima_pos){
-                ultima_pos.padre.izq = null;
-            }
-        
-        }else if (ultima_pos.der == null || ultima_pos.izq != null){ // si no hay derecha, el predecesor reemplaza al borrado
-               Nodo pre = predecesor(ultima_pos.izq);
-               if (pre.izq != null){
-                  pre.izq.padre = pre.padre;
-                  pre.padre.der = pre.izq;
-                }
-                 pre.padre = ultima_pos.padre;
-                 pre.izq = ultima_pos.izq;
-                 pre.der = ultima_pos.der;
-                
-                 //Cambiamos referencias del padre
-                 if(ultima_pos.padre != null){
-                    if(ultima_pos.padre.valor.compareTo(ultima_pos.valor) < 0){
-                        ultima_pos.padre.der = pre;
-                    }else{
-                        ultima_pos.padre.izq = pre;
-                    }
-                 }
-        }else if(ultima_pos.der != null){
-            Nodo suc = sucesor(ultima_pos.der);
-             if (suc.der != null){
-                  suc.der.padre = suc.padre;
-                  suc.padre.izq = suc.der;
-                }
-                 suc.padre = ultima_pos.padre;
-                 suc.izq = ultima_pos.izq;
-                 suc.der = ultima_pos.der;
-                 
-                 //Cambiamos referencias del padre
-                 if(ultima_pos.padre != null){
-                    if(ultima_pos.padre.valor.compareTo(ultima_pos.valor) < 0){
-                        ultima_pos.padre.der = suc;
-                    }else{
-                        ultima_pos.padre.izq = suc;
-                    }
-        
-                }
-            }
-        
+    
     }
 
     private Nodo sucesor(Nodo actual){
         if(actual.izq == null){
             return actual;
         }else{
-            return predecesor(actual.izq);
+            return sucesor(actual.izq);
         }
     }
-
+    
     private Nodo predecesor(Nodo actual){
        if (actual.der == null){
         return actual;

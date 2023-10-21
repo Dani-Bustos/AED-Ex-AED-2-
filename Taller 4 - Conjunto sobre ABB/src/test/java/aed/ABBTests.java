@@ -38,7 +38,6 @@ class ABBTests {
         conjunto.insertar(4);
         assertEquals(4, conjunto.cardinal());
 
-        
         assertEquals(true, conjunto.pertenece(4));
         assertEquals(false, conjunto.pertenece(5));
         assertEquals(true, conjunto.pertenece(1));
@@ -91,6 +90,7 @@ class ABBTests {
         conjunto.insertar(7);
         conjunto.eliminar(6);
         assertEquals(2, conjunto.cardinal());
+        assertEquals(false,conjunto.pertenece(6));
         assertEquals(5, conjunto.minimo());
         assertEquals(7, conjunto.maximo());        
     }
@@ -142,6 +142,7 @@ class ABBTests {
         conjunto.insertar(22);
         conjunto.insertar(25);
         conjunto.eliminar(20);
+        assertEquals(false,conjunto.pertenece(20));
         assertEquals(8, conjunto.cardinal());
         assertEquals(4, conjunto.minimo());
         assertEquals(25, conjunto.maximo());
@@ -171,7 +172,6 @@ class ABBTests {
     @Test
     void siguiente_inorder() {
         ABB<Integer> conjunto = new ABB<Integer>();
-        Iterador<Integer> iterador = conjunto.iterador();
 
         conjunto.insertar(5);
         conjunto.insertar(4);
@@ -182,7 +182,8 @@ class ABBTests {
         conjunto.insertar(24);
         conjunto.insertar(22);
         conjunto.insertar(25);
-        
+
+        Iterador<Integer> iterador = conjunto.iterador();
         assertEquals(4, iterador.siguiente());
         assertEquals(5, iterador.siguiente());
         assertEquals(12, iterador.siguiente());

@@ -119,56 +119,54 @@ public class ABB<T extends Comparable<T>> implements Conjunto<T> {
     public void eliminar(T elem){
         Nodo A_borrar = buscarNodo(elem, _raiz);
         cantidad--;
+        Boolean es_raiz = false;
         if (_raiz == null || A_borrar.valor != elem){
             cantidad++;
             return;
         }
+        if(A_borrar.valor == _raiz.valor){ es_raiz = true;  }
         
         if(A_borrar.izq == null && A_borrar.der == null){ //Sin Hijos
-          
-            if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
+            if(es_raiz){
+                _raiz = null;
+            }else if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
                 A_borrar.padre.izq = null;
             }else{
                 A_borrar.padre.der = null;
             }
 
         }else if (A_borrar.der == null){//Solo Hijo Izquierdo
-            if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
+            
+            if (es_raiz){_raiz = _raiz.izq; _raiz.padre = null;}
+              
+            else if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
                 A_borrar.padre.izq = A_borrar.izq;
             }else{
                 A_borrar.padre.der = A_borrar.izq;
             }
         
         }else if(A_borrar.izq == null){ //Solo Hijo Derecho
-            if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
+            
+            if (es_raiz){_raiz = _raiz.der;_raiz.padre = null;}
+            
+            else if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
                 A_borrar.padre.izq = A_borrar.der;
             }else{
                 A_borrar.padre.der = A_borrar.der;
             }
         }else{ //dosHijos
           Nodo suc = sucesor(A_borrar.der);
-
-          if(suc.der != null){
+          
+            
+           A_borrar.valor = suc.valor;
+           if(suc.der != null){
             suc.der.padre = suc.padre;
-            suc.padre.izq = suc.der;
-          }
-        
-           suc.padre = A_borrar.padre;
-           suc.izq = A_borrar.izq;
-           
-           if(A_borrar.der == suc){
-            suc.der = A_borrar.der.der;
-           }else{
-            suc.der = A_borrar.der;
-           }
-
-           if (suc.padre != null){
-            if(A_borrar.valor.compareTo(A_borrar.padre.valor) < 0){
-                A_borrar.padre.izq = suc;
-            }else{
-                A_borrar.padre.der = suc;
-            }
-          }
+            if(suc.padre != A_borrar){
+            suc.padre.izq = suc.der;}else{A_borrar.der = suc.der;}
+           }else{suc.padre.izq = null;}
+         
+            
+          
 
         }
             
@@ -183,20 +181,30 @@ public class ABB<T extends Comparable<T>> implements Conjunto<T> {
         }
     }
     
-    private Nodo predecesor(Nodo actual){
-       if (actual.der == null){
-        return actual;
-       }else{
-        return predecesor(actual.der);
-       }
+    
+    private String inOrder(Nodo r){
+        if (r == null){
+            return "";
+        }else{
+           
+           return  inOrder(r.izq) + r.valor.toString() + "," + inOrder(r.der);
+        }        
+    
     }
+    
+    
+
     public String toString(){
-        throw new UnsupportedOperationException("No implementada aun");
+        
+        String res = inOrder(_raiz);
+        res = res.substring(0, res.length()-1);
+        res = "{" + res + "}";
+        return res;
     }
 
     private class ABB_Iterador implements Iterador<T> {
         private Nodo _actual;
-
+        
         public boolean haySiguiente() {            
             throw new UnsupportedOperationException("No implementada aun");
         }

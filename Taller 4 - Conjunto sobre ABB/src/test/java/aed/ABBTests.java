@@ -147,6 +147,21 @@ class ABBTests {
         assertEquals(4, conjunto.minimo());
         assertEquals(25, conjunto.maximo());
     }
+    
+@Test
+void unHijoEliminarToString(){
+     ABB<Integer> conjunto = new ABB<Integer>();
+        
+        conjunto.insertar(5);
+        conjunto.insertar(6);
+        conjunto.insertar(7);
+        conjunto.insertar(3);
+        conjunto.insertar(15);
+        conjunto.insertar(12);
+       assertEquals("{3,5,6,7,12,15}",conjunto.toString()); 
+       conjunto.eliminar(5);
+        assertEquals("{3,6,7,12,15}",conjunto.toString());
+    }       
 
     @Test
     void eliminar_elemento_con_sucesor_arriba() {
@@ -163,6 +178,7 @@ class ABBTests {
         conjunto.insertar(19);
         conjunto.insertar(21);
         conjunto.eliminar(20);
+        assertEquals(false,conjunto.pertenece(20));
         assertEquals(9, conjunto.cardinal());
         assertEquals(4, conjunto.minimo());
         assertEquals(25, conjunto.maximo());
@@ -210,6 +226,10 @@ class ABBTests {
         assertEquals("{4,6,8}", c.toString());
 
     }
+
+    
+
+
 
     Integer NCLAVES = 1000; 
 

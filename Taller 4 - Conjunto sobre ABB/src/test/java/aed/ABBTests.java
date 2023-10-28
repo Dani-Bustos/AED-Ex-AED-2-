@@ -207,9 +207,10 @@ void unHijoEliminarToString(){
         assertEquals(16, iterador.siguiente());
         assertEquals(20, iterador.siguiente());
         assertEquals(22, iterador.siguiente());
+        assertEquals(true,iterador.haySiguiente());
         assertEquals(24, iterador.siguiente());
         assertEquals(25, iterador.siguiente());
-        
+        assertEquals(false,iterador.haySiguiente());
     }
 
     @Test
@@ -231,7 +232,7 @@ void unHijoEliminarToString(){
 
 
 
-    Integer NCLAVES = 1000; 
+    Integer NCLAVES = 100000; 
 
     private Integer clave(Integer i) {        
         return NCLAVES * ((i * i - 100 * i) % NCLAVES) + i;
@@ -255,6 +256,7 @@ void unHijoEliminarToString(){
         // Insertar de nuevo
         for (Integer i = 0; i < NCLAVES; i++) {
             Integer k = clave(i);
+
             assertEquals(true, conjunto.pertenece(k));
             conjunto.insertar(k);
             assertEquals(true,conjunto.pertenece(k));
@@ -280,6 +282,7 @@ void unHijoEliminarToString(){
             } else {
                 assertEquals(true, conjunto.pertenece(k));
                 conjunto.eliminar(k);
+                
                 assertEquals(false,conjunto.pertenece(k));
             }
         }

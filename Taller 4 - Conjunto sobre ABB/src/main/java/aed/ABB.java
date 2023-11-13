@@ -208,7 +208,41 @@ public class ABB<T extends Comparable<T>> implements Conjunto<T> {
         }        
     
     }
-    
+    public boolean hayCamino(int n){
+       List<T> historial = new ArrayList<>(cantidad);
+       
+        Nodo actual = _raiz;
+        if(_raiz == null ){
+            return false;
+        }else{
+            int profundidad = 1;
+            //casos base
+            while(true){
+            
+            if(actual == null){
+                return false;
+            }else if(profundidad == n){
+                return true;
+            }else{
+                //lo añadimos para no bajar de vuelta a este nodo si necesitamos subir
+                historial.add(actual.valor);
+                //casos iterativos
+                
+                if(actual.der != null &&  !historial.contains(actual.der.valor) ){
+                    actual = actual.der;
+                    profundidad++;
+                }else if (actual.izq != null && !historial.contains(actual.izq.valor)){
+                    actual = actual.izq;
+                    profundidad++;
+                }else{
+                    actual = actual.padre;
+                    profundidad--;
+                }
+            }
+           }
+            
+        }
+    }
     
 
     public String toString(){

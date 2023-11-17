@@ -116,7 +116,7 @@ class InternetToolkitTests {
         
         Collector.getInstance().reset();
         Fragment[] ordenados = Herramientas.tcpReorder(paquetes.clone());
-
+        
         assertTrue(Collector.getInstance().getValue() <= 13*n); // Verifica que la complejidad sea lineal
         assertTrue(verificarOrden(ordenados));
         assertTrue(mismosElementos(ordenados,paquetes));

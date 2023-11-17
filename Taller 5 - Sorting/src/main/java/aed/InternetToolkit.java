@@ -1,7 +1,7 @@
 package aed;
 
 
-import java.util.Iterator ;
+
 import aed.PriorityQueueTupla;
 import aed.Router;
 import aed.ListaEnlazada;
@@ -52,26 +52,70 @@ public class InternetToolkit {
     }
     
     public IPv4Address[] sortIPv4(String[] ipv4) {
-        //Usamos radix
-             IPv4Address[] res = new IPv4Address[ipv4.length];
-            ListaEnlazada<IPv4Address>[] buckets = new ListaEnlazada[256];
-            for(int i = 0; i<ipv4.length;i++){
+        //Usamos radixsort, chekeando las direcciones de atras para adelante
+        IPv4Address[] res = new IPv4Address[ipv4.length];
+        ListaEnlazada<IPv4Address>[] buckets = new ListaEnlazada[256];
+            
+        //La 1era vez necesitamos generar  a mano o es nullpointer exception
+        for(int i = 0; i<ipv4.length;i++){
                 IPv4Address buffer = new IPv4Address(ipv4[i]);
-                buckets[buffer.getOctet(3)] = new ListaEnlazada<IPv4Address>();
-                buckets[buffer.getOctet(3)].agregarAdelante(buffer);
-            }
-           for(int i = 2;i>= 0;i--){  
-             int Indres = 0;
-             ListaEnlazada primera = buckets[0];
-             for(int j = 1; j < 256;j++){
-                  primera.concatenar(buckets[j]);
-                 
-            }
-            res = primera.Lista2Array();  
-           }
+                int tripla = buffer.getOctet(3);
+                if(buckets[tripla] == null){
+                buckets[tripla] = new ListaEnlazada<IPv4Address>();
+                }
+                buckets[tripla].agregarAtras(buffer);
+        }
+           
+           
 
+            //Comparamos con las otras tres triplas de numeros
+        for(int i = 2;i>= 0;i--){  
+            int indRes = 0;
+            for(int j = 0; j < 256;j++){
+                    
+                    if(buckets[j] != null){
+                       Iterador<IPv4Address> it = buckets[j].iterador();
+                       
+                       while(it.haySiguiente()){
+                        res[indRes] = it.siguiente();
+                        indRes++;
+                        }
+                        //vacio el balde
+                        buckets[j] = new ListaEnlazada<IPv4Address>();    
+                    }
+                    
+            }
+               
+            
+            for(int j = 0;j<res.length;j++){
+                    int tripla = res[j].getOctet(i);
+                    if(buckets[tripla] == null){
+                    buckets[tripla] = new ListaEnlazada<IPv4Address>();
+                  
+                        
+
+                    }
+                    buckets[tripla].agregarAtras(res[j]);
+            }
+           
+            }
+            
+                 int indRes = 0;
+                for(int j = 0; j < 256;j++){
+                    
+                    if(buckets[j]  != null){
+                     Iterador<IPv4Address> it = buckets[j].iterador();
+                    
+                    while(it.haySiguiente()){
+                        res[indRes] = it.siguiente();
+                        indRes++;
+                    }
+                   }
+                }
+                
+               
         
-      return null;
+      return res;
     }
   
 

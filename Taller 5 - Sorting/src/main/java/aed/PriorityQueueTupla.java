@@ -1,6 +1,6 @@
 package aed;
 
-import aed.InternetToolkit.routers;
+import aed.Router;
 
 public class PriorityQueueTupla {
 

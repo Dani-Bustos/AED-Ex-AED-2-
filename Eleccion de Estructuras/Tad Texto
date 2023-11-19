@@ -1,0 +1,96 @@
+// Observacion, las operaciones en los tries de diccionarioDigital y Conjunto digital son ""O(1)"" porque la consigna dice
+// Que esta acotada la maxima longitud de las palabras
+
+
+var MasRepetidas : ConjuntoDigital;
+
+var PalPos : DiccionarioDigital<Pal,Array(int)> // Trie;
+var texto : Vector(String);
+
+
+proc nuevoTexto():Texto{
+   res.MasRepetidas.ConjVacio;
+   res.PalPos.DiccionarioVacio;
+   res.texto := new Vector();
+}
+
+proc copyAndAddArray(In a : Array[T],elemExtra : T): Array[T]{
+
+     T[] nuevo := new Array(t.texto.length + 1);
+     int i = 0;
+     while(i < a.length){
+     nuevo[i] := a[i];  
+     }
+     nuevo[i] := elemExtra;
+     return nuevo;
+}
+
+
+proc agregarPalabra(Inout t: Texto, p: Palabra){
+  	if(t.MasRepetidas.tamaño == 0){
+        	t.masRepetidas.agregar(p); //O(1), acotado
+        	  
+	}else if(t.PalPos.esta(p)){
+	    Iterador it = t.MasRepetidas.iterador;
+	    Palabra repetida := it.siguiente
+	    if ( (t.obtener(p).length + 1) > t.PalPos.obtener(repetida) ){
+		  
+		t.masRepetidas.ConjVacio;
+		t.masRepetidas.agregar(p) //O(1), acotado
+		
+            }else if ((t.obtener(p).length + 1) == t.PalPos.obtener(repetida) ){
+		   t.masRepetidas.agregar(p); //O(1),acotado
+   
+	    }	  
+	}
+        
+         //O(n)
+        t.texto.agregarAtras(nuevo);
+        
+
+}
+
+proc CambiarPalabra(Inout t: Texto, In vieja : Palabra, In nueva : Palabra){
+	if(t.MasRepetidas.esta(vieja)){
+	  
+	  t.MasRepetidas.Sacar(vieja);
+	  t.MasRepetidas.agregar(nueva);
+	  
+	  }
+	  
+	String pos := t.PalPos.obtener(vieja);
+	t.PalPos.borrar(vieja);//O(1) acotado
+	t.PalPos.definir(Nueva,pos); //O(1) acotado
+        
+        int i = 0;
+        while(i < pos.length){ // O(k), k la cantidad de aparaciones de la palabra vieja
+        t.texto.obtener(pos[i]) := nueva;
+        i++;
+        }		              	   
+    
+}
+
+proc Posiciones(In t : Texto, In p : Palabra){
+	return t.PalPos.obtener(p);
+
+}
+
+proc subTexto(In t : Texto, In desde : int, In hasta : int): Texto{
+Complejidad: O(Desde-Hasta)	
+	res := nuevoTexto;
+        int i = hasta - desde;
+        while(i < hasta){
+        res.agregarPalabra(i); //O(1)
+        }
+        return res;
+}
+
+proc masRepetidas(In t : Texto){
+   return t.masRepetidas;
+}
+
+
+Inv Rep:
+Toda Palabra en t.texto es una clave en t.PalPos y su valor asociado en el diccionario es exactamente las posiciones en las que se encuentra en t.Texto, sin repetidos. No hay claves en t.PalPos que no sean palabras en t.Texto. Las palabra que estan en t.MasRepetidas se encuentran en t.Texto y no existen otras palabras en ese vector tal que su cantidad de aparaciones sea mayor a las de t.MasRepetidas.	
+Func Abs:
+La longitud de palabras es igual a la de t.Texto, y ambas poseen los mismos elementos, la misma cantidad de veces. Estan en el mismo orden. 

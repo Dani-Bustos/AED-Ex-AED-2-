@@ -18,6 +18,13 @@ public class ListaEnlazada<T> implements Secuencia<T> {
          prev = null;
         }
     }
+    
+    public T ValorUltimo(){
+        return ultimo.valor;
+    }
+    public T ValorPrimero(){
+        return primero.valor;
+    }
 
     public ListaEnlazada() {
         primero = null;
@@ -45,6 +52,15 @@ public class ListaEnlazada<T> implements Secuencia<T> {
        primero = nuevo;
     }
 
+    public void ConcatenarAtras(ListaEnlazada<T> l){
+        ultimo.sig = l.primero;
+        l.primero.prev = ultimo;
+    }
+
+    public void ConcatenarAdelante(ListaEnlazada<T> l){
+        primero.prev = l.ultimo;
+        l.ultimo.sig = primero;
+    }
     public void agregarAtras(T elem) {
         Nodo nuevo = new Nodo(elem);
        if (primero == null || ultimo == null){

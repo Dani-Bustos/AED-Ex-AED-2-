@@ -333,5 +333,118 @@ class ListaEnlazadaTests {
         assertTrue(it.hayAnterior());
         assertEquals(44, it.anterior());    
     }
+ 
+  public class Conjunto{
+    ListaEnlazada<Integer> representacion;
+   
+    public Conjunto(){
+        representacion = new ListaEnlazada<>();
+    }
+    
+    public void agregar( int n){
+        if(representacion.longitud() == 0){
+            representacion.agregarAtras(n);
+        }else if(n > representacion.ValorUltimo()){
+            representacion.agregarAtras(n);
 
+        }else if (n <  representacion.ValorPrimero()){
+            representacion.agregarAdelante(n);
+
+        }else{
+            Iterador<Integer> it = representacion.iterador();
+            int cuenta = 0;
+            int num = it.siguiente();
+            //Busco el primer elemento mas grande, para saber a partir de donde correr la lista
+            while(num < n){
+                num = it.siguiente();
+                cuenta++;
+            }
+            int sig = num;
+            representacion.modificarPosicion(cuenta,n);
+            cuenta++;
+            //Corro todo para la derecha la lista
+            while(it.haySiguiente()){
+                num = it.siguiente();
+                representacion.modificarPosicion(cuenta, sig);
+                sig = num;
+                
+                cuenta++;
+            }
+            //Agrego el nodo adicional que falta
+            representacion.agregarAtras(num);
+        }
+    }
+    public int minimo(){
+        return representacion.ValorPrimero();
+    }
+    
+    
+    public int maximo(){
+        return representacion.ValorUltimo();
+    }
+    public Conjunto Interseccion(Conjunto c1, Conjunto c2){
+        Conjunto res = new Conjunto();
+        Iterador<Integer> primerIt = c1.representacion.iterador();
+        Iterador<Integer> segundoIt = c2.representacion.iterador();
+        if(c1.minimo() > c2.maximo()){
+            c2.representacion.ConcatenarAdelante(c1.representacion);
+            return c2;
+        }else if(c1.maximo() < c2.minimo()){
+            c2.representacion.ConcatenarAtras(c1.representacion);
+            return c2;
+        }
+        boolean avanzar1ero = false;
+        boolean avanzar2do = false;
+        int elemc1 = primerIt.siguiente();int elemc2 = segundoIt.siguiente();
+        while(primerIt.haySiguiente() && segundoIt.haySiguiente()){
+            if(avanzar1ero){
+                elemc1 = primerIt.siguiente();
+               avanzar1ero = false;
+            }
+            if(avanzar2do){
+                elemc2 = segundoIt.siguiente();
+                avanzar2do = false;
+            }
+
+            if(elemc1 == elemc2){
+                res.agregar(elemc1);
+                avanzar1ero = true;
+                avanzar2do = true;
+            }else if(elemc1 < elemc2){
+                avanzar1ero = true;
+            }else if(elemc1 > elemc2){
+                avanzar2do = true;
+            }
+        }
+        return res;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return representacion.toString();
+    }
+}
+
+@Test
+  void pruebConjunto(){
+     Conjunto conj = new Conjunto();
+     conj.agregar(0);
+     conj.agregar(2);
+     conj.agregar(3);
+     conj.agregar(10);
+     conj.agregar(4);
+     conj.agregar(1);
+     
+     Conjunto conj2 = new Conjunto();
+     conj2.agregar(0);
+     conj2.agregar(2);
+     
+     conj2.agregar(10);
+     conj2.agregar(4);
+     conj2.agregar(1);
+     
+     assertEquals("[0, 1, 2, 3, 4, 10]",conj.toString());
+     assertEquals("[0, 1, 2, 4, 10]", conj.Interseccion(conj,conj2).toString()); 
+    }
 }

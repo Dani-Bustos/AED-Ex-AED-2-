@@ -222,7 +222,7 @@ void unHijoEliminarToString(){
         c.insertar(6);
         c.insertar(8);
         assertEquals("{4,5,6,7,8}", c.toString());
-        assertEquals(true , c.hayCamino(3) );
+        assertEquals(true , c.hayCamino(1) );
         c.eliminar(5);
         c.eliminar(7);
         assertEquals("{4,6,8}", c.toString());

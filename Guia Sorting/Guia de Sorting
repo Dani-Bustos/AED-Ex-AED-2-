@@ -1,0 +1,21 @@
+Ej 1
+Insertion sort: O(n²), Selection sort: O(n²), Merge Sort(nlogn),QuickSort O(n²) depende del pivot, HeapSort(n*log(n))
+
+Ej 2
+ordenaria el segundo array con cualquier algoritmo eficiente de sorting(merge,quick heap) y luego utilizarai un algoritmo
+de unión ordenada de arreglo. Creamos un nuevo arreglo de longitud |a| + |b| , tomamos el ultimo elemento de a.
+Buscamos el primer elemento de b que es mas grande, e insertamos antes de esa posicion a "a". si no hubiese tal elemento lo insertamos al final
+
+O(blogb + (|a|+|b|) )  = 
+
+ej 3
+Convertimos en min-Heap el arreglo usando algoritmo de floyd, desencolamos k veces. Complejidad : O(k*log(n)). 
+Si k fuese igual a n, podemos simplemente ordenar el arreglo con algoritmos mas rapidos uqe heapsort y devolver los primeros k elementso
+
+ej 4
+Usamos el algoritmo de Merge de Merge Sort, la complejidad es la suma de la longitud de todos los arreglos , + la suma de gauss de la longitud de todos los arreglos ej : suma s_i y sum j hasta n sum desde 0 hasta j : s[i] 
+
+ej 5
+Idea: Contamos la cantidad de repeticiones de cada palabra, la añadimos a un diccionario log. luego iteramos por todos los elementos y los ponemos en un arreglo. Convertimos este arreglo en heap, construimos un nuevo arreglo desencolando todos los elemetos. 
+
+

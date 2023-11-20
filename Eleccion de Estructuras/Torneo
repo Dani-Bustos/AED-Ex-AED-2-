@@ -1,1 +1,26 @@
-var 
+var PuntosXEquipo : DiccionarioAVL<Equipo,Puntos>
+var posXPuntos : DiccionarioAVL<Puntos, <Pos,Int>
+
+proc registrarPartido(Inout t: Torneo, In ganador : Equipo, In perdedor : Equipo){
+        if(t.PosXPuntos.esta(t.PuntosXEquipo.obtener(Equipo))){
+          
+          
+        
+        
+        }     
+       
+       
+       
+        if(t.PuntoXEquipo.esta(ganador){
+        	t.PuntosXEquipo.definir(ganador, t.PuntoxEquipo.obtener(ganador) + 1); //O(log n)
+        }else{
+        	t.PuntosXEquipo.definir(ganador,1);//O(log n)
+        }
+
+          
+
+}
+
+proc puntos(In t : Torneo, in e : Equipo) : int{
+	t.PuntosXEquipo.obtener(e); // O(log n)
+}

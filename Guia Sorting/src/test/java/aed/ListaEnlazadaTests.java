@@ -39,13 +39,23 @@ void mergeSortTest(){
    
 @Test
 void TestFrecuencia(){
-    Integer[] a = new Integer[]{7,7,4,2};
+    Integer[] a = new Integer[]{7,7,7,2,4,8,2};
     Sorting instancia = new Sorting();
     Integer[] res = instancia.OrdenarPorFrecuencia(a);
-    Integer[] correcto = {7,7,2,4};
+    Integer[] correcto = {7,7,7,2,2,4,8};
     assertArrayEquals(res, correcto);
 
     
 }
+
+@Test
+void RepeticionesContinuas(){
+    Sorting instancia = new Sorting();
+    int[] a = new int[]{3,3,3,3,2,2,6,6,6,6};
+    int[] b = new int[]{2,4,6,3,3,3};
+    int[] res = instancia.NsecuenciasRepetidasUnoRandom(a, b, 3);
+    int[] correcto = new int[]{2,2,2,3,3,3,3,3,3,3,4,6,6,6,6,6};
+    assertArrayEquals(res, correcto);
+}  
     
 }

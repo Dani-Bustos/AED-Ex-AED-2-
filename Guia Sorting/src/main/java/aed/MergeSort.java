@@ -1,4 +1,5 @@
 package aed;
+import aed.TuplaEstable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -8,92 +9,17 @@ import java.util.Set;
 import java.util.TreeMap;
 import aed.PriorityQueueTupla;
 import javax.swing.RowFilter.Entry;
-class Sorting {
-       
-      public class TuplaEstable implements Comparable<TuplaEstable>{
-         Integer primero;
-        Integer segundo;
-         TuplaEstable(Integer a, Integer b){
-            primero = a;
-            segundo = b;
-         }
-         public  Integer primerElem(){
-            return primero;
-         }
 
-         public Integer segundoElem(){
-            return segundo;
-         }
-         
-         public int compareTo(TuplaEstable otro){
-          if(this.primero.compareTo(otro.primero) > 0){
-            return 1;
-          }else if (this.primero.compareTo(otro.primero) < 0){
-            return -1;
-          }else{
-            if(this.segundo.compareTo(otro.segundo) < 0){
-               return 1;
-            }else if (this.segundo.compareTo(otro.segundo) > 0){
-               return -1;
-            }else{
-               return 0;
-            }
-          }
-        }
-      
-      } 
+class Sorting <T extends Comparable<T>> {
+       
+   
      
        Sorting(){
          
        }
 
 
-       Integer[] mergeSort(Integer[] A,int p, int r){
-          if(p >= r){
-            return new Integer[0]; 
-          }else{
-            int q = (p+r) /2;
-            mergeSort(A,p,q);
-            mergeSort(A,q+1,r);
-            return  Merge(A,p,q,r); 
-          }
-       }
       
-       Integer[] Merge(Integer[] A,int p, int q, int r){
-         int longIzq = q-p + 1;
-         int longDerecha = r - q;
-         Integer[] L =  new Integer[longIzq];
-         Integer[] R =  new Integer[longDerecha];
-         for(int i = 0; i < longIzq;i++){
-            L[i] = A[p+i];
-         }
-          for(int i = 0; i < longDerecha;i++){
-            R[i] = A[q+i+1];
-         }
-         int i = 0; int j = 0; int k = p;
-
-         while(i < longIzq && j < longDerecha){
-            if(L[i].compareTo(R[j]) <= 0){
-                A[k] = L[i];
-                i++;
-            }else{A[k] = R[j]; j++;}
-         k++; 
-        }
-         while(i < longIzq){
-            A[k] = L[i];
-            i++;
-            k++;
-         }
-         
-         while(j < longDerecha){
-            A[k] = R[j];
-            k++;
-            j++;
-         }
-         
-        return A;
-                  
-        }
       
       Integer[] OrdenarPorFrecuencia(Integer[] A){
         TreeMap<Integer,Integer> arbolDeRep = new TreeMap<>();
@@ -127,7 +53,7 @@ class Sorting {
       }
       //Ej 8 guia de sorting
       public int[] NsecuenciasRepetidasUnoRandom(int[] A, int[] B , int n){
-         TuplaEstable[] tuplasA = new TuplaEstable[n];
+         TuplaEstable[] tuplasA =  new TuplaEstable[n];
          tuplasA[0] = new TuplaEstable(A[0],1);
          //Obtengo un arreglo de tuplas de las n secuencias continuas de a
          int indTA = 0;
@@ -174,5 +100,62 @@ class Sorting {
          return res;
         
       }
+      //Ej 8 , 2
+      //Complejidad : O(|A| + n(log(n) +|B|) )
+      public int[] NSecuenciasRepetidasBmismosElementos(int[] A ,int[] B, int n){
+         TuplaEstable[] tuplasA =   new TuplaEstable[n];
+         
+         tuplasA[0] = new TuplaEstable(A[0],1);
+         //Obtengo un arreglo de tuplas de las n secuencias continuas de a
+         int indTA = 0;
+         //O(|A|)
+         for(int i =1 ; i<A.length;i++){
+            
+            if(A[i] == tuplasA[indTA].primerElem()){
+                  tuplasA[indTA].segundo++;
+            }else{
+               indTA++;
+               tuplasA[indTA] = new TuplaEstable(A[i], 1);
+            }
+           
+         }
+         Ordenadores ord = new Ordenadores<>();
+         //O(n*log(n))
+         ord.mergeSort(tuplasA, 0, tuplasA.length-1);
+         
+         int k = 0;
+         while(k<tuplasA.length-1){
+            if(tuplasA[k].primerElem() == tuplasA[k+1].primerElem()){
+               tuplasA[k].segundo += tuplasA[k+1].segundo;
+               tuplasA[k+1].primero = 0;
+               tuplasA[k+1].segundo = 0;
+               k++;
+            }
+           k++;
+         }  
+         //O(n*|B|) Agregamos a las repeticiones de las tuplas las apareciones en B
+         for(int z = 0; z < tuplasA.length;z++){
+            for (int j = 0; j< B.length;j++){
+               if(tuplasA[z].primerElem() == B[j]){
+                  tuplasA[z].segundo++;
+               }
+            }
+         }
+      
+      
+         //Theta(|A| + |B|)Reconsturimos el arreglo final 
+         int[] res = new int[A.length + B.length];
+         int indRes = 0;
+         for(int i = 0; i<tuplasA.length;i++){
+            for(int j = 0; j <tuplasA[i].segundoElem();j++){
+             res[indRes] = tuplasA[i].primerElem();
+             indRes++;
+            } 
+         }
+      
+         return res;
+      }
+      
+      
       
 }

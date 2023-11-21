@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class ListaEnlazadaTests {
+class SortingTest {
 private <T extends Comparable<T>> boolean isInOrder(T[] array) {
     for (int i = 0; i < array.length - 1; i++) {
         if (array[i].compareTo(array[i + 1]) > 0) {
@@ -32,9 +32,9 @@ void mergeSortTest(){
          // Generate a random integer and store it in the array
          randomArray[i] = (Integer) random.nextInt(100); // Change 100 to the desired upper limit
      }
-    Integer[] b = a.mergeSort(randomArray, 0, arraySize-1);  
+     a.mergeSort(randomArray, 0, arraySize-1);  
     
-    assertTrue(isInOrder(b));   
+    assertTrue(isInOrder(randomArray));   
 }
    
 @Test
@@ -58,4 +58,14 @@ void RepeticionesContinuas(){
     assertArrayEquals(res, correcto);
 }  
     
+
+@Test
+void RepeticionesContinuasMismosElementosENAyB(){
+    Sorting instancia = new Sorting();
+    int[] a = new int[]{3,3,2,2,6,6,6};
+    int[] b = new int[]{2,6,3,3};
+    int[] res = instancia.NSecuenciasRepetidasBmismosElementos(a, b, 3);
+    int[] correcto = new int[]{2,2,2,3,3,3,3,6,6,6,6};
+    assertArrayEquals(res, correcto);
+}
 }

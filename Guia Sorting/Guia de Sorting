@@ -18,4 +18,8 @@ Usamos el algoritmo de Merge de Merge Sort, la complejidad es la suma de la long
 ej 5
 Idea: Contamos la cantidad de repeticiones de cada palabra, la añadimos a un diccionario log. luego iteramos por todos los elementos y los ponemos en un arreglo. Convertimos este arreglo en heap, construimos un nuevo arreglo desencolando todos los elemetos. 
 
+Ej 8 
+1) Contar tuplas de repeticiones, acotadas por n'. Insertar en Diccionario Avl, insertar elementos de m, iterar y reconstruir
+2) Contar tuplas de repeticiones, mergesort en tuplas, concantenar entre si, añadir las apariciones en B, reconstuir
+
 

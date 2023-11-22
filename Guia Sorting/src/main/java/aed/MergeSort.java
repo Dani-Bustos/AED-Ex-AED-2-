@@ -1,15 +1,8 @@
 package aed;
-import aed.TuplaEstable;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.PriorityQueue;
-import java.util.Set;
 import java.util.TreeMap;
-import aed.PriorityQueueTupla;
-import javax.swing.RowFilter.Entry;
 import java.util.LinkedList;
 class Sorting <T extends Comparable<T>> {
        

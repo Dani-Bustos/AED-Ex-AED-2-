@@ -78,4 +78,72 @@ void OrdenarEscaleras(){
 }
 
 
+
+    @Test
+    public void testEmptyArray() {
+        Ordenadores ordenadores = new Ordenadores();
+        Integer[] A = {};
+        ordenadores.AVLSort(A);
+        Integer[] expected = {};
+        assertArrayEquals(expected, A);
+    }
+
+    @Test
+    public void testSingleElementArray() {
+        Ordenadores ordenadores = new Ordenadores();
+        Integer[] A = {5};
+        ordenadores.AVLSort(A);
+        Integer[] expected = {5};
+        assertArrayEquals(expected, A);
+    }
+
+    @Test
+    public void testDistinctElementsArray() {
+        Ordenadores ordenadores = new Ordenadores();
+        Integer[] A = {3, 1, 4, 2, 5};
+        ordenadores.AVLSort(A);
+        Integer[] expected = {1, 2, 3, 4, 5};
+        assertArrayEquals(expected, A);
+    }
+
+    @Test
+    public void testDuplicateElementsArray() {
+        Ordenadores ordenadores = new Ordenadores();
+        Integer[] A = {3, 1, 4, 2, 3, 5, 1};
+        ordenadores.AVLSort(A);
+        Integer[] expected = {1, 1, 2, 3, 3, 4, 5};
+        assertArrayEquals(expected, A);
+    }
+
+    @Test
+    public void testAllElementsEqualArray() {
+        Ordenadores ordenadores = new Ordenadores();
+        Integer[] A = {2, 2, 2, 2, 2};
+        ordenadores.AVLSort(A);
+        Integer[] expected = {2, 2, 2, 2, 2};
+        assertArrayEquals(expected, A);
+    }
+
+    @Test
+    public void testArrayWithNullElements() {
+        Ordenadores ordenadores = new Ordenadores();
+        Integer[] A = {null, 3, null, 1, 4, 2, null, 5};
+        ordenadores.AVLSort(A);
+        Integer[] expected = {null, null, null, 1, 2, 3, 4, 5};
+        assertArrayEquals(expected, A);
+    }
+
+    @Test
+    public void testReverseSortedOrderArray() {
+        Ordenadores ordenadores = new Ordenadores();
+        Integer[] A = {5, 4, 3, 2, 1};
+        ordenadores.AVLSort(A);
+        Integer[] expected = {1, 2, 3, 4, 5};
+        assertArrayEquals(expected, A);
+    }
 }
+
+
+
+
+

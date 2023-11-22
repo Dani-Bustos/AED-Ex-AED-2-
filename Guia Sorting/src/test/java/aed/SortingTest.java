@@ -141,7 +141,8 @@ void OrdenarEscaleras(){
         Integer[] expected = {1, 2, 3, 4, 5};
         assertArrayEquals(expected, A);
     }
-
+     
+    
 
     @Test
     public void CountintSortTest(){
@@ -151,6 +152,17 @@ void OrdenarEscaleras(){
         int[] expected = {2,2,2,5,6,6,10};
         assertArrayEquals(A,expected);
     }
+
+    @Test
+    public void RaizDeNFueraDeRangoTest(){
+        Sorting s = new Sorting();
+        Ordenadores ord = new Ordenadores<>();
+        int[] A = {4,2,3,1};
+        Integer[] res = s.RaizDeNNumerosFueraDeRango(A, 3,4);
+        assertEquals(true,isInOrder(res));
+
+        }
+
 }
 
 

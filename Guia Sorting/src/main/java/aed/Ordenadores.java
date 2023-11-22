@@ -97,7 +97,7 @@ public class Ordenadores< T extends Comparable<T>> {
               
     }
 
-    void UnionArreglosOrdenados(T[] A,T[] B){
+     T[] UnionArreglosOrdenados(T[] A,T[] B){
      
      int longIzq = A.length;
      int longDerecha = B.length;
@@ -123,6 +123,7 @@ public class Ordenadores< T extends Comparable<T>> {
         j++;
      }
      
+     return res;
     
               
     }

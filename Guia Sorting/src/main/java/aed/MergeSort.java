@@ -225,13 +225,13 @@ class Sorting <T extends Comparable<T>> {
       }
 
       
-      public void RaizDeNNumerosFueraDeRango(int[] A, int R, int L){
+      public Integer[] RaizDeNNumerosFueraDeRango(int[] A, int L, int R){
          LinkedList<Integer> FueraDeRango = new LinkedList<Integer>();  
          LinkedList<Integer> EnRango = new LinkedList<Integer>();
 
          for(int i = 0 ; i<A.length;i++){
             //Guardo los elementos fuera de rango, cant: √n
-            if(R < A[i] && L< A[i]){
+            if(R < A[i] ||  A[i]< L){
                FueraDeRango.add(A[i]);
             }else{
                EnRango.add(A[i]);
@@ -243,13 +243,13 @@ class Sorting <T extends Comparable<T>> {
           //O (√n)
          Integer[] arrFueraDeRango =  FueraDeRango.toArray(new Integer[FueraDeRango.size()]);
         
-         Ordenadores ord = new Ordenadores<>();
+         Ordenadores<Integer> ord = new Ordenadores<Integer>();
          //O(√nlog(√n))
          ord.mergeSort(arrFueraDeRango, 0, arrFueraDeRango.length-1);
          //O(n) se puede optimizar para reducirel rango del counting;
          ord.countingSort(A, R);
          
-         ord.mer
+         return ord.UnionArreglosOrdenados(arrEnRango, arrFueraDeRango);
 
 
          

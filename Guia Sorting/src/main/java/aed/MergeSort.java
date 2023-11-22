@@ -246,8 +246,10 @@ class Sorting <T extends Comparable<T>> {
          Ordenadores ord = new Ordenadores<>();
          //O(√nlog(√n))
          ord.mergeSort(arrFueraDeRango, 0, arrFueraDeRango.length-1);
-
+         //O(n) se puede optimizar para reducirel rango del counting;
+         ord.countingSort(A, R);
          
+         ord.mer
 
 
          

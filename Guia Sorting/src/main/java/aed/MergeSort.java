@@ -2,6 +2,7 @@ package aed;
 import aed.TuplaEstable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.PriorityQueue;
@@ -9,7 +10,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import aed.PriorityQueueTupla;
 import javax.swing.RowFilter.Entry;
-
+import java.util.LinkedList;
 class Sorting <T extends Comparable<T>> {
        
    
@@ -154,8 +155,80 @@ class Sorting <T extends Comparable<T>> {
          }
       
          return res;
+      }  
+      //Necesito definir una comparacion diferente para el ejercicio que sigue
+      private static class TuplaEscalera implements Comparable<TuplaEscalera>{
+            int primero;
+            int segundo;
+            
+            TuplaEscalera(int a,int b){
+               primero = a;
+               segundo = b;
+            }
+            
+            @Override
+            public int compareTo( TuplaEscalera otro) {
+                if(this.primero > otro.primero){
+                  return -1;
+                }else if ( this.primero < otro.primero){
+                  return 1;
+                }else{
+                  if(this.segundo < otro.segundo){
+                     return -1;
+                  }else if(this.segundo > otro.segundo){
+                     return 1;
+                  }else{
+                     return 0;
+                  }
+                  }
+                }
+            }
+         
+         
+     
+     
+      public int[] OrdenaEscaleras(int[] A){
+         
+        
+         //Se define escalera como la subsecuencia maximal de sucesores en un arreglo
+         LinkedList<TuplaEscalera> tuplasEscaleras = new LinkedList<TuplaEscalera>();
+         
+        
+         //O(|A|) Obtenemos le primer elemento  de cada escalera y su longitud
+         int x = 0;
+         while(x < A.length-1){
+            int cuenta = 1;
+            int j = x;
+           while(j < A.length && A[j]+1 == A[j+1]){
+               cuenta++;
+               j++;
+           }
+           tuplasEscaleras.add(new TuplaEscalera(cuenta,A[x]));
+           x = j+1;        
+         }
+         if(A[A.length-2] != A[A.length-1] + 1){
+            tuplasEscaleras.add(new TuplaEscalera(1, A[A.length-1]));
+         }
+         
+         TuplaEscalera[] arrRes =  tuplasEscaleras.toArray(new TuplaEscalera[tuplasEscaleras.size()]);
+         Ordenadores ord = new Ordenadores<>();
+         //Peor caso: nlog(n), en verdad es cantEscaleras*log(cantEscaleras)
+         ord.mergeSort(arrRes, 0, arrRes.length -1);
+         
+         //Theta(n)
+         int[] res = new int[A.length];
+         int indRes = 0;
+         for(int i = 0; i<arrRes.length;i++){
+            
+            for(int j = 0; j<arrRes[i].primero;j++){
+              res[indRes] = arrRes[i].segundo + j;    
+              indRes++;
+            }
+                     
+         }
+         //Theta(n) Reconstruimos las escaleras
+         return res;
+
       }
-      
-      
       
 }

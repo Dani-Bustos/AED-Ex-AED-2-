@@ -17,7 +17,7 @@ private <T extends Comparable<T>> boolean isInOrder(T[] array) {
 
 @Test
 void mergeSortTest(){
-    Sorting a = new Sorting();
+    Ordenadores a = new Ordenadores();
      // Specify the size of the array
      int arraySize = 20;
 
@@ -68,4 +68,14 @@ void RepeticionesContinuasMismosElementosENAyB(){
     int[] correcto = new int[]{2,2,2,3,3,3,3,6,6,6,6};
     assertArrayEquals(res, correcto);
 }
+@Test
+void OrdenarEscaleras(){
+    Sorting instancia = new Sorting();
+    int[] a = new int[]{5,6,8,9,10,7,8,9,20,15};
+    int[] res = instancia.OrdenaEscaleras(a);
+    int[] correcto = new int[]{7,8,9,8,9,10,5,6,15,20};
+    assertArrayEquals(correcto, res);
+}
+
+
 }

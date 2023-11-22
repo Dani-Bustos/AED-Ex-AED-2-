@@ -141,6 +141,16 @@ void OrdenarEscaleras(){
         Integer[] expected = {1, 2, 3, 4, 5};
         assertArrayEquals(expected, A);
     }
+
+
+    @Test
+    public void CountintSortTest(){
+        Ordenadores ord = new Ordenadores<>();
+        int[] A = {5,2,6,2,10,6,2};
+        ord.countingSort(A,10);
+        int[] expected = {2,2,2,5,6,6,10};
+        assertArrayEquals(A,expected);
+    }
 }
 
 

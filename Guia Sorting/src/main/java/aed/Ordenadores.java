@@ -28,6 +28,25 @@ public class Ordenadores< T extends Comparable<T>> {
          }
        }
     }
+    //O(n+k)
+    void countingSort (int[] A, int k){
+        int[] contador = new int[k];
+        for(int i = 0; i<A.length;i++){
+
+          contador[A[i]-1]++;
+        }
+        int indRes = 0;
+        //Reconstruyo el array en base  a lo que contamos
+        
+        for(int i = 0; i<k;i++){
+          for(int j = 0; j<contador[i];j++){
+            A[indRes] = i+1;
+            indRes++;
+          }
+        }
+      }
+    
+    
     //Complejidad: O(nlog(n))
     void mergeSort(T[] A,int p, int r){
           
@@ -77,4 +96,34 @@ public class Ordenadores< T extends Comparable<T>> {
     
               
     }
-}
+
+    void UnionArreglosOrdenados(T[] A,T[] B){
+     
+     int longIzq = A.length;
+     int longDerecha = B.length;
+     T[] res = (T[]) new Object[longDerecha + longIzq];
+     int i = 0; int j = 0; 
+     int indres = 0;
+     while(i < longIzq && j < longDerecha){
+        if(A[i].compareTo(B[j]) <= 0){
+            res[indres] = A[i];
+            i++;
+        }else{res[indres] = B[j]; j++;}
+     indres++;
+    }
+     while(i < longIzq){
+        res[indres] = A[i];
+        i++;
+        indres++;
+     }
+     
+     while(j < longDerecha){
+        res[indres] = B[j];
+        indres++;
+        j++;
+     }
+     
+    
+              
+    }
+  }

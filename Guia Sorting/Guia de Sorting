@@ -30,7 +30,33 @@ Ej 8
 1) Contar tuplas de repeticiones, acotadas por n'. Insertar en Diccionario Avl, insertar elementos de m, iterar y reconstruir
 2) Contar tuplas de repeticiones, mergesort en tuplas, concantenar entre si, añadir las apariciones en B, reconstuir
 
+Ej 9
+Hacer buckets, primero con las notas, luego por el genero O(n).
+Si hubiese mas criterios, cantidaddes de buckets de criterios, en orden decreciente.
+No porque bucket requiere saber algo de la entrrada, ademas no realiza comparaicones
 
+Ej 10
+FALTA HACER
+proc int[] OrdenamientoCasiSort(Inout A: int[]){
+    if(A.length != 1){ 
+        casiSort(A);    
+        int[] nuevaMitad = new int[A.length/2];
+        int indNueva = 0;
+        for(int j = A.length/2; i < A.length;j++){
+            nuevaMitad[indNueva] = A[j];
+            ind++;
+        }
+        int[] MitadOrdenada = new int[A.length/2];
+        for(int j = 0; j < A.length/2;j++){
+           viejaMitad[j] = A[j];
+        }
+        MitadOrdenada + OrdenamientoCasiSort(nuevaMitad);  
+    }
+}
 
+EJ 11
+Es hacer counting sort, bastanfe facil. K es parte del requiere, y no crece con la entrada
+
+Ej 12
 
 

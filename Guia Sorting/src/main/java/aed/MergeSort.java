@@ -223,5 +223,37 @@ class Sorting <T extends Comparable<T>> {
          return res;
 
       }
+
       
+      public void RaizDeNNumerosFueraDeRango(int[] A, int R, int L){
+         LinkedList<Integer> FueraDeRango = new LinkedList<Integer>();  
+         LinkedList<Integer> EnRango = new LinkedList<Integer>();
+
+         for(int i = 0 ; i<A.length;i++){
+            //Guardo los elementos fuera de rango, cant: √n
+            if(R < A[i] && L< A[i]){
+               FueraDeRango.add(A[i]);
+            }else{
+               EnRango.add(A[i]);
+            }
+           
+         }
+        //O (n-√n)
+         Integer[] arrEnRango =  EnRango.toArray(new Integer[EnRango.size()]);
+          //O (√n)
+         Integer[] arrFueraDeRango =  FueraDeRango.toArray(new Integer[FueraDeRango.size()]);
+        
+         Ordenadores ord = new Ordenadores<>();
+         //O(√nlog(√n))
+         ord.mergeSort(arrFueraDeRango, 0, arrFueraDeRango.length-1);
+
+         
+
+
+         
+
+      
+      
+      }
+
 }

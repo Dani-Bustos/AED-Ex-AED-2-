@@ -58,5 +58,5 @@ EJ 11
 Es hacer counting sort, bastanfe facil. K es parte del requiere, y no crece con la entrada
 
 Ej 12
-
+Haces radix sort con cada palabra, total esta acotada a 26 los buckets, de atra para adelante. Despues merge sort en base al primer elemtto de la tupla
 

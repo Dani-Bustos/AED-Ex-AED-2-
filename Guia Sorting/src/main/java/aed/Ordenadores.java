@@ -3,6 +3,7 @@ package aed;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Vector;
 
 public class Ordenadores< T extends Comparable<T>> {
     //O(nlog(d)), d los elementos dsitintos en el arreglo
@@ -127,4 +128,32 @@ public class Ordenadores< T extends Comparable<T>> {
     
               
     }
-  }
+  
+    int BinariaEnRangoVector(Vector<Integer> A, Integer elem){
+         int left  = 0;
+         int right = A.size();
+         int medio = (right + left ) / 2;
+         while(left != right){
+            Integer valorMedio = A.get(medio);
+            Integer medioREsta= A.get(medio-1);
+            
+            if(valorMedio.compareTo(elem) == 0 && medioREsta.compareTo(elem) != 0 ){
+               return medio;
+            }else{
+               if(A.get(medio) > elem){
+                   right = medio;
+               }else if(A.get(medio) < elem){
+                  left = medio;
+               }else{
+                  right = medio;
+               }
+            }
+         
+            medio = (right + left) /2;
+         
+         }   
+         return medio;
+
+    }
+  
+   }

@@ -1,5 +1,6 @@
 package aed;
 import java.util.Random;
+import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -163,7 +164,88 @@ void OrdenarEscaleras(){
 
         }
 
+    @Test
+    public void Binaria1eraAparicionEnVector(){
+        Ordenadores ord = new Ordenadores<>();
+        Vector<Integer> A = new Vector<Integer>();
+        
+        A.add(1);A.add(2);A.add(2);A.add(2);A.add(3);
+        assertEquals(1, ord.BinariaEnRangoVector(A,2));
+    }
+
+
+    @Test
+    public void testBasicCase() {
+        Ordenadores ordenadores = new Ordenadores();
+        Vector<Integer> A = new Vector<>(java.util.Arrays.asList(1, 2, 3, 4, 5));
+        int result = ordenadores.BinariaEnRangoVector(A, 3);
+        assertEquals(2, result);
+    }
+
+    @Test
+    public void testElementAtBeginning() {
+        Ordenadores ordenadores = new Ordenadores();
+        Vector<Integer> A = new Vector<>(java.util.Arrays.asList(1, 2, 3, 4, 5));
+        int result = ordenadores.BinariaEnRangoVector(A, 1);
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void testElementAtEnd() {
+        Ordenadores ordenadores = new Ordenadores();
+        Vector<Integer> A = new Vector<>(java.util.Arrays.asList(1, 2, 3, 4, 5));
+        int result = ordenadores.BinariaEnRangoVector(A, 5);
+        assertEquals(4, result);
+    }
+
+    @Test
+    public void testElementRepeated() {
+        Ordenadores ordenadores = new Ordenadores();
+        Vector<Integer> A = new Vector<>(java.util.Arrays.asList(1, 2, 3, 3, 4, 5));
+        int result = ordenadores.BinariaEnRangoVector(A, 3);
+        assertEquals(2, result);
+    }
+
+    @Test
+    public void testArrayWithSingleElement() {
+        Ordenadores ordenadores = new Ordenadores();
+        Vector<Integer> A = new Vector<>(java.util.Arrays.asList(1));
+        int result = ordenadores.BinariaEnRangoVector(A, 1);
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void testArrayWithTwoElements() {
+        Ordenadores ordenadores = new Ordenadores();
+        Vector<Integer> A = new Vector<>(java.util.Arrays.asList(1, 2));
+        int result = ordenadores.BinariaEnRangoVector(A, 2);
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void testElementPresentInMiddle() {
+        Ordenadores ordenadores = new Ordenadores();
+        Vector<Integer> A = new Vector<>(java.util.Arrays.asList(1, 2, 3, 4, 5));
+        int result = ordenadores.BinariaEnRangoVector(A, 3);
+        assertEquals(2, result);
+    }
+
+    @Test
+    public void testLargeArray() {
+        Ordenadores ordenadores = new Ordenadores();
+        Vector<Integer> A = new Vector<>();
+        for (int i = 1; i <= 10000; i++) {
+            A.add(i);
+        }
+        
+        int result = ordenadores.BinariaEnRangoVector(A, 5000);
+        assertEquals(4999, result);
+    }
 }
+
+
+
+
 
 
 

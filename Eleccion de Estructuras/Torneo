@@ -1,26 +1,100 @@
-var PuntosXEquipo : DiccionarioAVL<Equipo,Puntos>
-var posXPuntos : DiccionarioAVL<Puntos, <Pos,Int>
+Equipo es int
+Modulo TorneoImpl implementa Torneo
 
-proc registrarPartido(Inout t: Torneo, In ganador : Equipo, In perdedor : Equipo){
-        if(t.PosXPuntos.esta(t.PuntosXEquipo.obtener(Equipo))){
+var PuntosXEquipo : DiccionarioAVL<Equipo,Puntos>;
+var Puntajes : vector<Puntos>;
+var EquiposMaxDif : ConjuntoLog<Equipo>;
+var MaxDif : int;
+
+proc registrarPartido(Inout t: Torneo, In ganador : Equipo, In perdedor : Equipo, In golesGanador : int, In golesPerdedos : int){
           
-          
-        
-        
-        }     
-       
        
        
         if(t.PuntoXEquipo.esta(ganador){
-        	t.PuntosXEquipo.definir(ganador, t.PuntoxEquipo.obtener(ganador) + 1); //O(log n)
+        	int puntosViejos :=t.PuntosXEquipo.obtener(ganador))
+        	posicion1eraAparicion := busqueda(t.Puntajes, puntosViejos); //Busqueda binaria , nos devuelve la primera aparicion de un elemento
+        	t.Puntajes.modificarPosicion(posicion1eraAparicion, puntosViejos +1);
+        	t.PuntosXEquipo.definir(ganador, puntosViejos + 1); //O(log n)
+                
         }else{
         	t.PuntosXEquipo.definir(ganador,1);//O(log n)
+                t.Puntajes.agregarAdelante(1); //El n esta acotado a la cantidad de equipos, por las dudas preguntar. El funcionamiento del vector es dudoso  
         }
-
-          
+        
+        if(!t.PuntoXEquipo.esta(perdedor){
+                
+       
+        	t.PuntosXEquipo.definir(perdedor,0);//O(log n)
+                t.Puntajes.agregarAdelante(0); //El n esta acotado a la cantidad de equipos, por las dudas preguntar. El funcionamiento del vector es dudoso  
+        }
+        
+        
+        int diferenciaGoles = golesGanador-golesPerdedor;
+        if(maxDif == diferenciaGoles ){
+            t.EquiposMaxDif.agregar(ganador);
+        }else {
+           if( maxDif < diferenciaGoles){
+            t.EquiposMaxDif = new ConjuntoLog<Equipo>;
+            t.EquiposMaxDif.agregar(ganador);
+            t.MaxDif = diferenciaGoles;
+           }
+        } 
 
 }
 
-proc puntos(In t : Torneo, in e : Equipo) : int{
-	t.PuntosXEquipo.obtener(e); // O(log n)
+proc puntos(In t : TorneoImpl, in e : Equipo) : int{
+	return t.PuntosXEquipo.obtener(e); // O(log n)
 }
+
+proc posicion(In t: TorneoImpl, in e : Equipo) : int{
+      // Adonde estamos en el vector, menos el tamaño del vector nos dice cuanta gente tenemos adelante.
+      // Le sumamos uno para compensar porque el vector arranca en 0
+      return t.Puntajes.tamaño - busqueda(t.Puntajes,t.PuntosXEquipo.obtener(e)-)  +1; // O(log(n)) , buscar los puntos y encontrar la1era posicion es logaritmico.
+}
+//Encuentra la primera aparicion de un elemento en un  vector en O(log(n))
+
+proc Busqueda(In vector<Puntos> A, In elem int): int{
+   int left = 0;
+   int right = A.longitud;
+   int medio = (right + left) / 2
+   while(left != right){
+       
+       if(A.obtener(medio) == elem && (medio == 0 ||  A.obtener(medio -1) != elem){
+       	return medio
+       }else{
+       
+         if(A.obtener(medio) > elem){
+            right = medio;
+            
+         }else if(A.obtener(medio) < elem){
+           left = medio;
+         }
+         else{
+         //Caso en el que estemos en el elemento pero  no sea la primera aparicion
+         right = medio;
+         }
+       }
+    medio = (right + left) /2;
+   }
+   return medio;
+   }
+}      
+       
+InvRep(t' : TorneoImpl){
+
+  Todo elemento en EquiposMaxDif Es clave en puntosPorEquipo y si pertenece a EquiposMaxDif no existen Equipos que pertenezecan 
+  a puntosXEquipo tal que sus puntos sean mayores a los de los elementos en EquiposMaxDif;
+  Todos los EquiposEnMaxDif tienen el mismo puntaje, que es ademas el mismo que MaxDif; La longitud del Vector de Puntos es igual a la cantidad de Equipos, no tiene numeros negativos,  cada uno corresponde a uno y solo uno de los equipos respectivamente. Si hubiese 4 equipos con 3 puntos, en el vector hay 3 posisicones con 3 puntos. El vector se encuentra ordenado de manera creciente
+}  
+
+FuncAbs(t' : TorneoImpl) : Torneo{
+t : Torneo | Para Todo clave en Equipos que pertenezca a t'.puntosXEquipo.data  si solo si clave pertenece a t.equipos.
+Y el valor de todas las claves en t'.putnsoXEquipo.data es igual a la suma de 1 si fue ganador en t.partidos o 0 si fue perdedor
+
+}    
+
+
+  
+}
+
+
